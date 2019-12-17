@@ -1,6 +1,13 @@
 NAME = libft.a
 SRCS = main.c\
-		src/printf.c
+		src/printf.c\
+		src/ft_print_nb.c\
+		src/ft_print_U.c\
+		src/ft_print_x.c\
+		src/ft_print_add.c\
+		src/ft_print_string.c\
+		src/ft_print_character.c\
+
 FLAGS = -Wall -Wextra -Werror -g3
 INCLUDES = include/ft_printf.h
 LIB = libft/libft.a

@@ -1,20 +1,19 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_print_U.c                                       :+:      :+:    :+:   */
+/*   ft_print_u.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: rqouchic <rayane.qouchich@gmail.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/13 13:27:59 by rqouchic          #+#    #+#             */
-/*   Updated: 2019/12/13 13:47:24 by rqouchic         ###   ########.fr       */
+/*   Updated: 2019/12/30 20:16:26 by rqouchic         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/ft_printf.h"
 #include "../libft/libft.h"
 
-
-int		count_len_U(unsigned int nb)
+int			count_len_u(unsigned int nb)
 {
 	int i;
 
@@ -32,40 +31,66 @@ int		count_len_U(unsigned int nb)
 	return (i);
 }
 
-void	ft_left_U(unsigned int nb, t_struct *Struct, int len)
+int			ft_left_u(unsigned int nb, t_struct *data, int len)
 {
-	while (Struct->precision-- - len > 0)
-		ft_putchar_fd('0', 1);
-	ft_putnbr_unsigned(nb);
-	while (Struct->width-- > 0)
-		ft_putchar_fd(' ', 1);
+	int a;
+	int p;
+
+	a = 0;
+	p = data->precision;
+	while (data->precision-- - len > 0)
+		a += ft_putchar_fd_return('0', 1);
+	if (!(p == -1 && nb == 0))
+		a += ft_putnbr_unsigned(nb);
+	while (data->width-- > 0)
+		a += ft_putchar_fd_return(' ', 1);
+	return (a);
 }
 
-void	ft_right_U(unsigned int nb, t_struct *Struct, int len, char c)
+int			ft_right_u(unsigned int nb, t_struct *data, int len, char c)
 {
-	while (Struct->width-- > 0)
-		ft_putchar_fd(c, 1);
-	while (Struct->precision-- - len > 0)
-		ft_putchar_fd('0', 1);
-	ft_putnbr_unsigned(nb);
+	int a;
+	int p;
+
+	p = data->precision;
+	a = 0;
+	if (data->width == -1 && data->precision == -1 && nb == 0)
+		return (a);
+	if (data->flag == '0' && data->width > 0 && data->precision > 0)
+		while (data->width-- > 0)
+			a += ft_putchar_fd_return(' ', 1);
+	while (data->width-- > 0)
+		a += ft_putchar_fd_return(c, 1);
+	while (data->precision-- - len > 0)
+		a += ft_putchar_fd_return('0', 1);
+	if (!(p == -1 && nb == 0))
+		a += ft_putnbr_unsigned(nb);
+	return (a);
 }
 
-void	ft_print_U(unsigned int n, t_struct *Struct)
+int			ft_print_u(unsigned int nb, t_struct *data)
 {
-	int len;
-	int len_width;
-	char c;
+	int		len;
+	int		len_width;
+	char	c;
+	int		a;
 
+	a = 0;
 	c = ' ';
-	if (Struct->flag == '0')
+	if (data->precision == -1 && data->width > 0 && nb == 0)
+		data->width = data->width + 1;
+	if (data->flag == '0')
 		c = '0';
-	len = count_len(n);
+	len = count_len_u(nb);
+	if (nb == 0)
+		len = 1;
 	len_width = len;
-	if (Struct->precision > len)
-		len_width = Struct->precision;
-	Struct->width = Struct->width - len_width;
-	if (Struct->flag == '-')
-		ft_left_U(n, Struct, len);
+	if (data->precision > len)
+		len_width = data->precision;
+	data->width = data->width - len_width;
+	if (data->flag == '-')
+		a = ft_left_u(nb, data, len);
 	else
-		ft_right_U(n, Struct, len, c);
+		a = ft_right_u(nb, data, len, c);
+	return (a);
 }

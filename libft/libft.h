@@ -6,7 +6,7 @@
 /*   By: rqouchic <rayane.qouchich@gmail.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/06 16:25:36 by rqouchic          #+#    #+#             */
-/*   Updated: 2019/12/11 15:31:31 by rqouchic         ###   ########.fr       */
+/*   Updated: 2019/12/25 18:18:16 by rqouchic         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,7 +56,7 @@ char				*ft_substr(char const *s, unsigned int start, size_t len);
 char				**ft_split(char const *s, char c);
 void				ft_putchar_fd(char c, int fd);
 void				ft_putstr_fd(char *s, int fd);
-void				ft_putnbr_fd(int n, int fd);
+void				ft_putnbr_fd(int n, int fd, int i);
 void				ft_putendl_fd(char *s, int fd);
 char				*ft_strmapi(char const *s, char (*f)(unsigned int, char));
 char				*ft_strtrim(char const *s1, char const *set);
@@ -70,8 +70,9 @@ void				ft_lstdelone(t_list *lst, void (*del)(void*));
 void				ft_lstclear(t_list **lst, void (*del)(void*));
 char				*ft_strncpy(char *dst, const char *src, size_t len);
 void				ft_lstiter(t_list *lst, void (*f)(void *));
-char				*ft_itoa_base(int n, char *base);
-void				ft_putnbr_unsigned(unsigned int n);
+char				*ft_itoa_base(unsigned int n, char *base);
+int					ft_putnbr_unsigned(unsigned int n);
 char				*ft_itoa_base_add(long long n, char *base);
+int					ft_putchar_fd_return(char c, int fd);
 
 #endif

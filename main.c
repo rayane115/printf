@@ -6,7 +6,7 @@
 /*   By: rqouchic <rayane.qouchich@gmail.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/11 15:17:47 by rqouchic          #+#    #+#             */
-/*   Updated: 2019/12/17 17:24:25 by rqouchic         ###   ########.fr       */
+/*   Updated: 2019/12/31 01:08:08 by rqouchic         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,26 +20,31 @@ int main (void)
 
 	a = 59898;
 
-	//ft_printf("%-5.5drayane%s%--25d\n",96225,"salut",25);
-	//printf("%-5.5drayane%s%--25d\n",96225,"salut",25);
+	/*ft_printf("%-5.5drayane%s%--25d\n",96225,"salut",25);
+	printf("%-5.5drayane%s%--25d\n",96225,"salut",25);
 
-	//ft_printf("%-55dra|\n",925);
-	//printf("%-55dra|\n\n",925);
+	ft_printf("%-55dra|\n",925);
+	printf("%-55dra|\n\n",925);
 
-	//ft_printf("%10.5xra|\n",96225);
-	//printf("%10.5xra|\n\n",96225);
+	ft_printf("%10.5xra|\n",96225);
+	printf("%10.5xra|\n\n",96225);
 
-	//ft_printf("%-90.5dra|\n",96225);
-	//printf("%-90.5dra|\n",96225);
+	ft_printf("%-90.5dra|\n",96225);
+	printf("%-90.5dra|\n",96225);
 
-	//ft_printf("%90sra|\n", "rayane");
-	//printf("%90sra|\n", "rayane");
+	ft_printf("%.3sra|\n", "rayane");
+	printf("%.3sra|\n", "rayane");
 
-	//ft_printf("%50Xra|\n",506);
-	//printf("%50Xra|\n\n",506);
+	ft_printf("%50Xra|\n",506);
+	printf("%50Xra|\n\n",506);*/
 
 	//ft_printf("%-100pra\n",&a);
-    printf("%0*d", 10,1000);
+    //printf("%*.10dra\n", 100,5);
+    //printf("%0100.5ira\n",5);
+    //ft_printf("%0100.5ira\n",5);
+    //ft_printf("%*.10dra\n", 100,5);
+   // printf("%0*d\n", 100,5);
+    //printf("%0100d",5);
 
 
 
@@ -71,6 +76,56 @@ int main (void)
     printf("Point 1 67            |%.1d|\n",  67);
     printf("\n|----           Fin            ----|\n\n");
     //system("leaks a.out");*/
+
+   //ft_printf("\nret = %x\n",printf("56"));
+	//printf("\nret = %x\n",printf("56"));
+    //ft_printf("%-500.10dra|\n",9);
+	//printf("%-500.10dra|\n",9);
+
+    //ft_printf("%-10sra|\n","bonjour comment tu vas");
+    //printf("ret = %d",printf("%-10sra|\n","bonjour comment tu vas"));
+
+    //ft_printf("%-1000.100sra|\n","bonjour comment tu vas");
+    //printf("%-1000.100sra|\n","bonjour comment tu vas");
+    //int ret, ret1;
+
+   //ft_printf("%.10i\n", 0);
+   // printf("ret du vrai = %d\n",printf("%.10i\n", 0));
+    //printf("---------------\n");
+
+   // ft_printf("%.i\n", -25);
+   // printf("ret du vrai = %d\n",printf("%.i\n", -25));
+   // printf("---------------\n");
+
+   // ft_printf("%.0i\n", 0);
+   // printf("ret du vrai = %d\n",printf("%.0i\n", 0));
+   // printf("---------------\n");
+
+    //ft_printf("%i\n", 0);
+    //printf("ret du vrai = %d\n",printf("%i\n", 0));
+    //ft_printf("%.0x", 0);
+   // printf("\n");
+    //printf("ret = %d ",printf("%.0x", 0));
+
+    ft_printf("%u",25);
+    printf("\n");
+   printf("ret = %d ",ft_printf("%u",25));
+   // ft_printf("%-5.X", 0);
+   // printf("\n");
+    //printf("ret = %d ",printf("%-5.X", 0));
+   // printf("-------------------------------------");
+    //ft_printf("%.0x\n", 0);
+    //printf("ret = %d ",printf("%.0x\n", 0));
+    //if (ret != ret1)
+    //int ret;
+    //printf("%");
+    //ret = ft_printf("%100.0i\n", -10);
+   //printf("ret_p = %d ret_ryan = %d\n",printf("%100.0i\n",-10), ret);
+      //  printf("erreur de retour");
+   // int ret = ft_printf("%20.12d et %4.8i !\n", 2154789, 24);
+    //int ret1 = printf("%20.12d et %4.8i !\n", 2154789, 24);
+    //printf("ret = %d\n ret1 = %d\n", ret, ret1);
+    system("leaks a.out");
     return (0);
 }
 

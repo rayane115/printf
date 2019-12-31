@@ -1,36 +1,41 @@
-NAME = libft.a
-SRCS = main.c\
-		src/printf.c\
+NAME = libftprintf.a
+
+SRCS = 		src/printf.c\
 		src/ft_print_nb.c\
-		src/ft_print_U.c\
+		src/ft_print_u.c\
 		src/ft_print_x.c\
 		src/ft_print_add.c\
 		src/ft_print_string.c\
 		src/ft_print_character.c\
+		src/ft_verif_struct.c\
 
-FLAGS = -Wall -Wextra -Werror -g3
-INCLUDES = include/ft_printf.h
-LIB = libft/libft.a
+O_FILES =   $(SRCS:.c=.o)
 
-all:	${NAME}
+LIBFT   =       libft.a
 
-$(NAME):
-	@(make -C libft)
-	@(gcc $(FLAGS) $(SRCS) $(LIB) -I $(INCLUDES))
-	@(./a.out)
+CFLAGS =    -Wall -Wextra -Werror
+ 
+HEADER =    ft_printf.h
+
+.PHONY =    all clean fclean re bonus
+
+all : $(NAME)
+
+$(NAME):    $(LIBFT) $(O_FILES) 
+	ar crs $(NAME) $(O_FILES)
+
+$(LIBFT):
+	cd libft; make re; make clean; cd ..
+	cp libft/$(LIBFT) $(NAME)
+
+.c.o:
+	gcc $(CFLAGS) -I${HEADER} -c $< -o $(<:.c=.o)
 
 clean:
+	rm -rf $(O_FILES)
 
-f :
-	@(make -C libft)
-	@(gcc $(FLAGS) -fsanitize=address $(SRCS) $(LIB) -I $(INCLUDES))
-	@(./a.out)
+fclean: clean
+	cd libft; rm -f $(LIBFT); cd ..
+	rm -f $(NAME)
 
-fclean:	clean
-	@(make fclean -C libft)
-	@(rm -rf a.out.dSYM)
-	@(rm -rf a.out)
-
-re:	fclean all
-
-.PHONY:	all clean fclean re
+re : fclean all

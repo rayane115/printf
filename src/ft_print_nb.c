@@ -6,18 +6,20 @@
 /*   By: rqouchic <rayane.qouchich@gmail.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/12 21:02:47 by rqouchic          #+#    #+#             */
-/*   Updated: 2019/12/13 16:51:23 by rqouchic         ###   ########.fr       */
+/*   Updated: 2019/12/31 00:28:17 by rqouchic         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/ft_printf.h"
 #include "../libft/libft.h"
 
-int		count_len(int nb)
+int			count_len(int nb)
 {
-	int i;
+	int		i;
 
 	i = 0;
+	if (nb == 0)
+		return (1);
 	if (nb < 0)
 	{
 		i++;
@@ -31,40 +33,96 @@ int		count_len(int nb)
 	return (i);
 }
 
-void	ft_left(int nb, t_struct *Struct, int len)
+int			ft_left(int nb, t_struct *data, int len)
 {
-	while (Struct->precision-- - len > 0)
-		ft_putchar_fd('0', 1);
-	ft_putnbr_fd(nb, 1);
-	while (Struct->width-- > 0)
-		ft_putchar_fd(' ', 1);
+	int		a;
+	int		p;
+
+	a = 0;
+	p = data->precision;
+	if (data->precision >= len && nb < 0)
+		data->width = data->width - 1;
+	if (nb < 0 && data->precision >= len)
+	{
+		ft_putchar_fd('-', 1);
+		a += ft_putchar_fd_return('0', 1);
+	}
+	if ((p >= len && nb < 0) || (nb < 0 && data->width > 0
+	&& p == 0 && data->flag == '0'))
+		nb = -nb;
+	while (data->precision-- - len > 0)
+		a += ft_putchar_fd_return('0', 1);
+	if (!(p == -1 && nb == 0))
+		ft_putnbr_fd(nb, 1, 0);
+	while (data->width-- > 0)
+		a += ft_putchar_fd_return(' ', 1);
+	while (data->width-- > 0)
+		a += ft_putchar_fd_return(' ', 1);
+	return (a);
 }
 
-void	ft_right(int nb, t_struct *Struct, int len, char c)
+int			ft_right(int nb, t_struct *data, int len, char c)
 {
-	while (Struct->width-- > 0)
-		ft_putchar_fd(c, 1);
-	while (Struct->precision-- - len > 0)
-		ft_putchar_fd('0', 1);
-	ft_putnbr_fd(nb, 1);
+	int		a;
+	int		p;
+	int		w;
+
+	p = data->precision;
+	w = data->width + len;
+	a = 0;
+	if (data->precision >= len && nb < 0)
+		data->width = data->width - 1;
+	while (data->width-- > 0)
+		a += ft_putchar_fd_return(c, 1);
+	if (p >= len && nb < 0)
+	{
+		ft_putchar_fd('-', 1);
+		a += ft_putchar_fd_return('0', 1);
+	}
+	while (data->precision-- - len > 0)
+		a += ft_putchar_fd_return('0', 1);
+	if ((p >= len && nb < 0) || (nb < 0 && w > 0
+	&& p == 0 && data->flag == '0'))
+		nb = -nb;
+	if (!(p == -1 && nb == 0))
+		ft_putnbr_fd(nb, 1, 0);
+	return (a);
 }
 
-void	ft_print_nb(int nb, t_struct *Struct)
+void		ft_raccou_nb(t_struct *data, int nb, int *len)
 {
-	int len;
-	int len_width;
-	char c;
+	if (data->precision == -1 && nb == 0)
+	{
+		if (data->width > 0)
+			data->width = data->width + 1;
+		*len = 0;
+	}
+}
 
+int			ft_print_nb(int nb, t_struct *data)
+{
+	int		a;
+	int		len;
+	int		len_width;
+	char	c;
+
+	a = 0;
 	c = ' ';
-	if (Struct->flag == '0')
+	if (data->flag == '0' && data->precision == 0)
 		c = '0';
 	len = count_len(nb);
 	len_width = len;
-	if (Struct->precision > len)
-		len_width = Struct->precision;
-	Struct->width = Struct->width - len_width;
-	if (Struct->flag == '-')
-		ft_left(nb, Struct, len);
+	if (data->precision == -1 && nb == 0)
+		ft_raccou_nb(data, nb, &len);
+	if (nb < 0 && data->flag == '0' && data->width > 0
+	&& data->precision == 0)
+		ft_putchar_fd('-', 1);
+	if (data->precision > len)
+		len_width = data->precision;
+	data->width = data->width - len_width;
+	if (data->flag == '-')
+		a = ft_left(nb, data, len);
 	else
-		ft_right(nb, Struct, len, c);
+		a = ft_right(nb, data, len, c);
+	return (len + a);
 }

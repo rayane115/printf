@@ -1,26 +1,23 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_putnbr_unsigned.c                               :+:      :+:    :+:   */
+/*   ft_putchar_fd_return.c                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: rqouchic <rayane.qouchich@gmail.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2019/11/11 13:09:21 by rqouchic          #+#    #+#             */
-/*   Updated: 2019/12/30 21:56:01 by rqouchic         ###   ########.fr       */
+/*   Created: 2019/12/24 19:12:32 by rqouchic          #+#    #+#             */
+/*   Updated: 2019/12/30 21:56:46 by rqouchic         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-int					ft_putnbr_unsigned(unsigned int n)
+int				ft_putchar_fd_return(char c, int fd)
 {
-	long			nb;
-	static int		i;
+	static int i;
 
 	i = 0;
-	nb = n;
-	if (nb > 9)
-		ft_putnbr_unsigned(nb / 10);
-	i += ft_putchar_fd_return((nb % 10) + '0', 1);
+	write(fd, &c, 1);
+	i++;
 	return (i);
 }

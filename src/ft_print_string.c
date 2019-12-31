@@ -6,60 +6,101 @@
 /*   By: rqouchic <rayane.qouchich@gmail.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/13 14:56:44 by rqouchic          #+#    #+#             */
-/*   Updated: 2019/12/13 18:39:55 by rqouchic         ###   ########.fr       */
+/*   Updated: 2019/12/30 23:33:15 by rqouchic         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/ft_printf.h"
 #include "../libft/libft.h"
 
-void	ft_left_string(char *str, t_struct *Struct, int len)
+int			ft_left_string(char *str, t_struct *data, int len)
 {
-	int i = 0;
-	while (Struct->precision-- - len > 0)
-		ft_putchar_fd('0', 1);
+	int		i;
+	int		a;
 
-	while (str[i])
+	a = 0;
+	i = 0;
+	if (data->precision > 0)
+		while (str[i] && i < data->precision)
+			a += ft_putchar_fd_return(str[i++], 1);
+	else
+		while (str[i])
+			a += ft_putchar_fd_return(str[i++], 1);
+	if (data->precision >= len)
+		while (data->width-- + data->precision - len > 0)
+			a += ft_putchar_fd_return(' ', 1);
+	else if (data->precision > 0 && data->precision < len)
 	{
-		ft_putchar_fd(str[i], 1);
-		i++;
+		while (data->width-- + len - data->precision > 0)
+			a += ft_putchar_fd_return(' ', 1);
 	}
-	while (Struct->width-- > 0)
-		ft_putchar_fd(' ', 1);
+	else
+		while (data->width-- > 0)
+			a += ft_putchar_fd_return(' ', 1);
+	return (a);
 }
 
-void	ft_right_string(char *str, t_struct *Struct, int len, char c)
+int			ft_right_string(char *str, t_struct *data, int len, char c)
 {
-	int i = 0;
-	while (Struct->width-- > 0)
-		ft_putchar_fd(c, 1);
-	while (Struct->precision-- - len > 0)
-		ft_putchar_fd('0', 1);
+	int		i;
+	int		a;
 
-	while (str[i])
-	{
-		ft_putchar_fd(str[i], 1);
-		i++;
-	}
+	i = 0;
+	a = 0;
+	if (data->width > 0 && data->precision == 0)
+		len = 0;
+	if (data->precision >= len)
+		while (data->width-- + data->precision - len > 0)
+			a += ft_putchar_fd_return(c, 1);
+	else if (data->precision > 0 && data->precision < len)
+		while (data->width-- + len - data->precision > 0)
+			a += ft_putchar_fd_return(c, 1);
+	if (data->precision > 0)
+		while (str[i] && i < data->precision)
+			a += ft_putchar_fd_return(str[i++], 1);
+	else
+		while (str[i])
+			a += ft_putchar_fd_return(str[i++], 1);
+	return (a);
 }
 
-void	ft_print_string(char *str, t_struct *Struct)
+char		ft_raccou_string(t_struct *data)
 {
-	int len;
-	int len_width;
-	char c;
+	char	a;
+	char	b;
 
+	a = '0';
+	b = ' ';
+	if (data->flag == '0')
+		return (a);
+	return (b);
+}
+
+int			ft_print_string(char *str, t_struct *data)
+{
+	int		len;
+	int		len_width;
+	char	c;
+	int		a;
+
+	a = 0;
 	c = ' ';
-	if (Struct->flag == '0')
-		c = '0';
-	//len = count_len(nb);
+	if (data->precision == -1)
+	{
+		data->precision = 0;
+		str = strdup("");
+	}
+	if (!str)
+		str = ft_strdup("(null)");
+	c = ft_raccou_string(data);
 	len = ft_strlen(str);
 	len_width = len;
-	if (Struct->precision > len)
-		len_width = Struct->precision;
-	Struct->width = Struct->width - len_width;
-	if (Struct->flag == '-')
-		ft_left_string(str, Struct, len);
+	if (data->precision > len)
+		len_width = data->precision;
+	data->width = data->width - len_width;
+	if (data->flag == '-')
+		a = ft_left_string(str, data, len);
 	else
-		ft_right_string(str, Struct, len, c);
+		a = ft_right_string(str, data, len, c);
+	return (a);
 }

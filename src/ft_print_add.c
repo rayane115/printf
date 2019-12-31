@@ -6,81 +6,98 @@
 /*   By: rqouchic <rayane.qouchich@gmail.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/13 15:00:59 by rqouchic          #+#    #+#             */
-/*   Updated: 2019/12/14 16:35:00 by rqouchic         ###   ########.fr       */
+/*   Updated: 2019/12/30 23:51:08 by rqouchic         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/ft_printf.h"
 #include "../libft/libft.h"
 
-/*int		count_len_add(long long int nb)
+int			ft_left_add(char *str, t_struct *data, int len)
 {
 	int i;
+	int a;
 
 	i = 0;
-	if (nb < 0)
+	a = 0;
+	while (data->precision-- - len > 0)
 	{
-		i++;
-		nb = -nb;
-	}
-	while (nb)
-	{
-		nb = nb / 10;
-		i++;
-	}
-	return (i);
-}*/
-
-void	ft_left_add(char *str, t_struct *Struct, int len)
-{
-	int i = 0;
-
-	while (Struct->precision-- - len > 0)
 		ft_putchar_fd('0', 1);
-	write(1,"0x",2);
-	while (str[i])
-	{
-		ft_putchar_fd(str[i], 1);
-		i++;
+		a++;
 	}
-	while (Struct->width-- > 0)
+	write(1, "0x", 2);
+	while (str[i])
+		ft_putchar_fd(str[i++], 1);
+	while (data->width-- > 0)
+	{
 		ft_putchar_fd(' ', 1);
+		a++;
+	}
+	return (a);
 }
 
-void	ft_right_add(char *str, t_struct *Struct, int len, char c)
+int			ft_right_add(char *str, t_struct *data, int len, char c)
 {
-	int i = 0;
+	int i;
+	int a;
 
-	while (Struct->width-- > 0)
+	i = 0;
+	a = 0;
+	while (data->width-- > 0)
+	{
 		ft_putchar_fd(c, 1);
-	while (Struct->precision-- - len > 0)
+		a++;
+	}
+	while (data->precision-- - len > 0)
+	{
 		ft_putchar_fd('0', 1);
-		write(1,"0x",2);
+		a++;
+	}
+	write(1, "0x", 2);
 	while (str[i])
 	{
 		ft_putchar_fd(str[i], 1);
 		i++;
 	}
+	return (a);
 }
 
-void	ft_print_add(long long int nb, t_struct *Struct)
+char		*ft_str_raccou_add(long long int nb)
 {
-	char *str;
-	int len;
-	int len_width;
-	char c;
+	char	*str;
 
-	c = ' ';
-	if (Struct->flag == '0')
-		c = '0';
-	str = ft_strdup(ft_itoa_base_add(nb, "0123456789abcdef"));
-	len = ft_strlen(str) + 2;
-	len_width = len;
-	if (Struct->precision > len)
-		len_width = Struct->precision;
-	Struct->width = Struct->width - len_width;
-	if (Struct->flag == '-')
-		ft_left_add(str, Struct, len);
+	if (nb != 0)
+		str = ft_strdup(ft_itoa_base_add(nb, "0123456789abcdef"));
 	else
-		ft_right_add(str, Struct, len, c);
+		str = strdup("0");
+	return (str);
+}
+
+int			ft_print_add(long long int nb, t_struct *data)
+{
+	char	*str;
+	int		len;
+	int		len_width;
+	char	c;
+	int		a;
+
+	a = 0;
+	c = ' ';
+	if (data->flag == '0')
+		c = '0';
+	str = ft_str_raccou_add(nb);
+	len = ft_strlen(str) + 2;
+	if (data->precision == -1 && nb == 0)
+		str = strdup("");
+	if (data->precision == -1 && nb == 0)
+		len = len - 1;
+	len_width = len;
+	if (data->precision > len)
+		len_width = data->precision;
+	data->width = data->width - len_width;
+	if (data->flag == '-')
+		a = ft_left_add(str, data, len);
+	else
+		a = ft_right_add(str, data, len, c);
+	return (len + a);
 }

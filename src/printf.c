@@ -6,135 +6,78 @@
 /*   By: rqouchic <rayane.qouchich@gmail.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/03 12:57:58 by rqouchic          #+#    #+#             */
-/*   Updated: 2019/12/14 16:18:29 by rqouchic         ###   ########.fr       */
+/*   Updated: 2019/12/31 01:09:23 by rqouchic         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/ft_printf.h"
 #include "../libft/libft.h"
 
-void		ft_verif_type(const char *str,t_struct *Struct,  int *i )
+void			ft_error_type(void)
 {
-	while (str[*i])
-	{
-		if (str[*i] == 'c' || str[*i] == 's' || str[*i] == 'p' ||
-		str[*i] == 'd' || str[*i] == 'i' ||
-		str[*i] == 'u' || str[*i] == 'x' || str[*i] == 'X' || str[*i] == '%')
-		{
-			Struct->type = str[*i];
-			return ;
-		}
-		*i = *i + 1;
-	}
+	write(1, "je ne fais pas les bonus, ou bien comportement chelou", 53);
 }
 
-void	ft_verif_precision(const char *str, t_struct *Struct, int *i)
+int				select_type(t_struct *data, va_list arg)
 {
-	if (str[*i] == '.')
-	{
-		*i += 1;
-		Struct->precision = ft_atoi(&str[*i]);
-	}
-	while (str[*i] && str[*i] >= '0' &&  str[*i] <= '9')
-		*i += 1;
-}
+	int			i;
 
-void	ft_verif_width(const char *str, t_struct *Struct, int *i)
-{
-	if (str[*i] >= '0' &&  str[*i] <= '9')
-		Struct->width = ft_atoi(&str[*i]);
-	while (str[*i] && str[*i] >= '0' &&  str[*i] <= '9')
-		*i += 1;
-}
-
-void	ft_verif_flags(const char *str, t_struct *Struct, int *i)
-{
-
-		if (str[*i] == '-')
-		{
-			Struct->flag = '-';
-			while (str[*i] == '-' || str[*i] == '0')
-				*i += 1;
-			return ;
-		}
-		if (str[*i] == '0')
-		{
-			Struct->flag = '0';
-			while (str[*i] == '0' || str[*i] == '-')
-			{
-				if (str[*i] == '-')
-					Struct->flag = '-';
-				*i += 1;
-			}
-			return ;
-		}
-}
-
-void	select_type(t_struct *Struct, va_list arg)
-{
-	if (Struct->type == 'c')
-		ft_print_char(va_arg(arg, int), Struct);
-
-	if (Struct->type == '%')
-		ft_print_char('%', Struct);
-
-	if (Struct->type == 'd' || Struct->type == 'i')
-		ft_print_nb(va_arg(arg, int), Struct);
-
-	if (Struct->type == 's')
-		ft_print_string(va_arg(arg, char *), Struct);
-
-	 if (Struct->type == 'p')
-	 	ft_print_add(va_arg(arg, long long int), Struct);
-
-	if (Struct->type == 'u')
-		ft_print_U(va_arg(arg, unsigned int), Struct);
-
-
-	if (Struct->type == 'x')
-		ft_print_x(va_arg(arg,unsigned long long int), Struct);
-
-	if (Struct->type == 'X')
-		ft_print_x(va_arg(arg,unsigned long long int), Struct);
-
-}
-
-void	ft_initial_struct(t_struct *Struct)
-{
-	Struct->flag = 0;
-	Struct->width = 0;
-	Struct->precision = 0;
-	Struct->flag = 0;
-}
-
-int ft_printf(const char *str, ...)
-{
-	int i;
-	t_struct *Struct;
-	va_list		arg;
 	i = 0;
+	if (data->type == 'c')
+		i = ft_print_char(va_arg(arg, int), data);
+	else if (data->type == '%')
+		i = ft_print_char('%', data);
+	else if (data->type == 'd' || data->type == 'i')
+		i = ft_print_nb(va_arg(arg, int), data);
+	else if (data->type == 's')
+		i = ft_print_string(va_arg(arg, char *), data);
+	else if (data->type == 'p')
+		i = ft_print_add(va_arg(arg, long long int), data);
+	else if (data->type == 'u')
+		i = ft_print_u(va_arg(arg, unsigned int), data);
+	else if (data->type == 'x' || data->type == 'X')
+		i = ft_print_x(va_arg(arg, unsigned long long int), data);
+	else
+	{
+		ft_error_type();
+		return (0);
+	}
+	return (i);
+}
 
+void			ft_struct(const char *str, va_list arg, int *i, t_struct *data)
+{
+	ft_initial_data(data);
+	ft_verif_flags(str, data, &i);
+	ft_verif_width(str, data, &i, arg);
+	ft_verif_precision(str, data, &i, arg);
+	ft_verif_type(str, data, &i);
+}
+
+int				ft_printf(const char *str, ...)
+{
+	int			i;
+	t_struct	*data;
+	va_list		arg;
+	int			a;
+
+	a = 0;
+	i = 0;
 	va_start(arg, str);
-	Struct = (t_struct *)malloc(sizeof(t_struct));
+	data = (t_struct *)malloc(sizeof(t_struct));
 	while (str[i])
 	{
 		if (str[i] == '%')
 		{
 			i++;
-			ft_initial_struct(Struct);
-			ft_verif_flags(str, Struct, &i);
-			ft_verif_width(str, Struct, &i);
-			ft_verif_precision(str, Struct, &i);
-			ft_verif_type(str, Struct, &i);
-			select_type(Struct, arg);
-
+			ft_struct(str, arg, &i, data);
+			a += select_type(data, arg);
 		}
-
 		else
-			ft_putchar_fd(str[i], 1);
-
+			a += ft_putchar_fd_return(str[i], 1);
 		i++;
 	}
+	free (data);
 	va_end(arg);
-	return (0);
+	return (a);
 }

@@ -6,50 +6,87 @@
 /*   By: rqouchic <rayane.qouchich@gmail.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/13 19:29:21 by rqouchic          #+#    #+#             */
-/*   Updated: 2019/12/14 16:06:14 by rqouchic         ###   ########.fr       */
+/*   Updated: 2019/12/30 20:25:29 by rqouchic         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/ft_printf.h"
 #include "../libft/libft.h"
 
-void	ft_left_char(char a, t_struct *Struct, int len)
+int			ft_left_char(char a, t_struct *data, int len)
 {
-	while (Struct->precision-- - len > 0)
+	int		b;
+
+	b = 0;
+	if ((data->width > 0 && a == '%') || (data->precision > 0 && a == '%'))
+	{
+		ft_putchar_fd('%', 1);
+		while (data->precision-- - len > 0)
+		{
+			ft_putchar_fd(' ', 1);
+			b++;
+		}
+	}
+	while (data->precision-- - len > 0)
+	{
 		ft_putchar_fd('0', 1);
-	ft_putchar_fd(a, 1);
-
-
-	while (Struct->width-- > 0)
+		b++;
+	}
+	if (a != '%')
+		ft_putchar_fd(a, 1);
+	while (data->width-- > 0)
+	{
 		ft_putchar_fd(' ', 1);
+		b++;
+	}
+	return (b);
 }
 
-void	ft_right_char(char a, t_struct *Struct, int len, char c)
+int			ft_right_char(char a, t_struct *data, int len, char c)
 {
-	while (Struct->width-- > 0)
+	int		b;
+
+	b = 0;
+	while (data->width-- > 0)
+	{
 		ft_putchar_fd(c, 1);
-	while (Struct->precision-- - len > 0)
+		b++;
+	}
+	if (data->precision > 0 && a == '%')
+	{
+		ft_putchar_fd('%', 1);
+		return (b);
+	}
+	while (data->precision-- - len > 0)
+	{
 		ft_putchar_fd('0', 1);
+		b++;
+	}
 	ft_putchar_fd(a, 1);
+	return (b);
 }
 
-void	ft_print_char(char a, t_struct *Struct)
+int			ft_print_char(char a, t_struct *data)
 {
-	int len;
-	int len_width;
-	char c;
+	int		len;
+	int		len_width;
+	char	c;
+	int		b;
 
+	b = 0;
 	c = ' ';
-	if (Struct->flag == '0')
+	if (data->flag == '0' && data->type == '%' && data->precision > 0)
+		data->width = data->width + 1;
+	if (data->flag == '0')
 		c = '0';
 	len = 1;
 	len_width = len;
-	if (Struct->precision > len)
-		len_width = Struct->precision;
-	Struct->width = Struct->width - len_width;
-	if (Struct->flag == '-')
-		ft_left_char(a, Struct, len);
+	if (data->precision > len)
+		len_width = data->precision;
+	data->width = data->width - len_width;
+	if (data->flag == '-')
+		b = ft_left_char(a, data, len);
 	else
-		ft_right_char(a, Struct, len, c);
+		b = ft_right_char(a, data, len, c);
+	return (len + b);
 }
-

@@ -6,7 +6,7 @@
 /*   By: rqouchic <rayane.qouchich@gmail.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/13 14:56:44 by rqouchic          #+#    #+#             */
-/*   Updated: 2019/12/30 23:33:15 by rqouchic         ###   ########.fr       */
+/*   Updated: 2020/01/01 22:14:26 by rqouchic         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,13 +64,15 @@ int			ft_right_string(char *str, t_struct *data, int len, char c)
 	return (a);
 }
 
-char		ft_raccou_string(t_struct *data)
+char		ft_raccou_string(char *str,t_struct *data)
 {
 	char	a;
 	char	b;
 
 	a = '0';
 	b = ' ';
+	if (data->prec_s <= -1)
+		data->precision = ft_strlen(str);
 	if (data->flag == '0')
 		return (a);
 	return (b);
@@ -85,14 +87,14 @@ int			ft_print_string(char *str, t_struct *data)
 
 	a = 0;
 	c = ' ';
-	if (data->precision == -1)
+	if (data->precision == -1 && data->prec_s == 0)
 	{
 		data->precision = 0;
 		str = strdup("");
 	}
 	if (!str)
 		str = ft_strdup("(null)");
-	c = ft_raccou_string(data);
+	c = ft_raccou_string(str,data);
 	len = ft_strlen(str);
 	len_width = len;
 	if (data->precision > len)
@@ -102,5 +104,9 @@ int			ft_print_string(char *str, t_struct *data)
 		a = ft_left_string(str, data, len);
 	else
 		a = ft_right_string(str, data, len, c);
+	if ((data->precision == -1 && data->prec_s == 0) || !str)
+		free(str);
 	return (a);
 }
+
+//(data->precision == -1 && data->prec_s == 0 ) || data->prec_s

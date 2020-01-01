@@ -6,7 +6,7 @@
 /*   By: rqouchic <rayane.qouchich@gmail.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/03 12:57:58 by rqouchic          #+#    #+#             */
-/*   Updated: 2019/12/31 01:09:23 by rqouchic         ###   ########.fr       */
+/*   Updated: 2020/01/01 22:16:40 by rqouchic         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,12 +71,14 @@ int				ft_printf(const char *str, ...)
 		{
 			i++;
 			ft_struct(str, arg, &i, data);
+		//	printf("%d = ma precisionbis\n",data->prec_s);
 			a += select_type(data, arg);
 		}
 		else
 			a += ft_putchar_fd_return(str[i], 1);
 		i++;
 	}
+	//printf("ret = %d\n",a);
 	free (data);
 	va_end(arg);
 	return (a);

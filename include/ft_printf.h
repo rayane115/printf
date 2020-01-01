@@ -6,7 +6,7 @@
 /*   By: rqouchic <rayane.qouchich@gmail.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/03 12:45:32 by rqouchic          #+#    #+#             */
-/*   Updated: 2019/12/31 01:04:07 by rqouchic         ###   ########.fr       */
+/*   Updated: 2020/01/01 00:48:50 by rqouchic         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,6 +25,8 @@ typedef	struct	s_struct
 	int			width;
 	int			precision;
 	char		type;
+	int			prec_bool;
+	int			prec_s;
 }				t_struct;
 
 void			ft_verif_type(const char *str, t_struct *data, int **i);
@@ -63,7 +65,7 @@ void			ft_width_precision_arg(int nextarg, t_struct *data);
 void			ft_initial_data(t_struct *data);
 void			ft_error_type(void);
 char			*ft_str_raccou_add(long long int nb);
-char			ft_raccou_string(t_struct *data);
+char			ft_raccou_string(char *str, t_struct *data);
 void			ft_raccou_nb(t_struct *data, int nb, int *len);
 
 #endif

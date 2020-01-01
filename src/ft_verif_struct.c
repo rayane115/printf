@@ -6,7 +6,7 @@
 /*   By: rqouchic <rayane.qouchich@gmail.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/30 21:24:15 by rqouchic          #+#    #+#             */
-/*   Updated: 2019/12/31 00:54:22 by rqouchic         ###   ########.fr       */
+/*   Updated: 2020/01/01 00:39:56 by rqouchic         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,11 +38,14 @@ va_list arg)
 		if (str[**i] == '*')
 		{
 			data->precision = va_arg(arg, int);
+			data->prec_s = data->precision;
 			if (data->precision == 0)
 				data->precision = -1;
 		}
 		else
+		{
 			data->precision = ft_atoi(&str[**i]) != 0 ? ft_atoi(&str[**i]) : -1;
+		}
 	}
 	while (str[**i] && ((str[**i] >= '0' && str[**i] <= '9') ||
 	str[**i] == '*'))
@@ -95,4 +98,6 @@ void	ft_initial_data(t_struct *data)
 	data->width = 0;
 	data->precision = 0;
 	data->type = 0;
+	data->prec_bool = 0;
+	data->prec_s = 0;
 }

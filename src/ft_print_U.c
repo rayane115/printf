@@ -6,7 +6,7 @@
 /*   By: rqouchic <rayane.qouchich@gmail.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/13 13:27:59 by rqouchic          #+#    #+#             */
-/*   Updated: 2019/12/30 20:16:26 by rqouchic         ###   ########.fr       */
+/*   Updated: 2020/01/01 19:03:02 by rqouchic         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,6 +38,12 @@ int			ft_left_u(unsigned int nb, t_struct *data, int len)
 
 	a = 0;
 	p = data->precision;
+	if (data->prec_s == -1 && nb == 0)
+	{
+		data->precision = 2;
+		data->width--;
+	}
+
 	while (data->precision-- - len > 0)
 		a += ft_putchar_fd_return('0', 1);
 	if (!(p == -1 && nb == 0))
@@ -79,7 +85,7 @@ int			ft_print_u(unsigned int nb, t_struct *data)
 	c = ' ';
 	if (data->precision == -1 && data->width > 0 && nb == 0)
 		data->width = data->width + 1;
-	if (data->flag == '0')
+	if (data->flag == '0' && (data->precision == 0 || data->prec_s <= -1))
 		c = '0';
 	len = count_len_u(nb);
 	if (nb == 0)

@@ -6,7 +6,7 @@
 /*   By: rqouchic <rayane.qouchich@gmail.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/13 15:00:59 by rqouchic          #+#    #+#             */
-/*   Updated: 2019/12/30 23:51:08 by rqouchic         ###   ########.fr       */
+/*   Updated: 2020/01/01 22:16:30 by rqouchic         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -88,7 +88,10 @@ int			ft_print_add(long long int nb, t_struct *data)
 	str = ft_str_raccou_add(nb);
 	len = ft_strlen(str) + 2;
 	if (data->precision == -1 && nb == 0)
+	{
+		free(str);
 		str = strdup("");
+	}
 	if (data->precision == -1 && nb == 0)
 		len = len - 1;
 	len_width = len;
@@ -99,5 +102,6 @@ int			ft_print_add(long long int nb, t_struct *data)
 		a = ft_left_add(str, data, len);
 	else
 		a = ft_right_add(str, data, len, c);
+	free(str);
 	return (len + a);
 }

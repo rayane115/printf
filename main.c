@@ -6,7 +6,7 @@
 /*   By: rqouchic <rayane.qouchich@gmail.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/11 15:17:47 by rqouchic          #+#    #+#             */
-/*   Updated: 2019/12/31 01:08:08 by rqouchic         ###   ########.fr       */
+/*   Updated: 2020/01/01 23:04:25 by rqouchic         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -107,9 +107,23 @@ int main (void)
    // printf("\n");
     //printf("ret = %d ",printf("%.0x", 0));
 
-    ft_printf("%u",25);
+    //ft_printf("%019.*d", -2, 5);
+   // printf("\n");
+  //printf("ret = %d ", printf("%019.*d", -2, 5));
+/*   ft_printf("%-.1x%9.*i%05.*uobuD%*xP", 931536652, 8, 195086420, 5, 2147483647, 4, 0);
     printf("\n");
-   printf("ret = %d ",ft_printf("%u",25));
+  printf("ret = %d ", printf("%-.1x%9.*i%05.*uobuD%*xP", 931536652, 8, 195086420, 5, 2147483647, 4, 0));
+ */
+    ft_printf("%x\n", 42);
+  //ft_printf("salut");
+
+  printf("ret = %d ", printf("%x", 42));
+
+  //printf("\n");
+   // printf("------------------------------\n");
+  //ft_printf("%018.0x",  2147483647);
+    //printf("\n");
+  //printf("ret = %d ",printf("%018.0x",  2147483647));
    // ft_printf("%-5.X", 0);
    // printf("\n");
     //printf("ret = %d ",printf("%-5.X", 0));

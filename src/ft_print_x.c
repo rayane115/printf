@@ -6,7 +6,7 @@
 /*   By: rqouchic <rayane.qouchich@gmail.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/13 13:54:45 by rqouchic          #+#    #+#             */
-/*   Updated: 2020/01/01 22:12:48 by rqouchic         ###   ########.fr       */
+/*   Updated: 2020/01/01 23:30:49 by rqouchic         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,9 +49,9 @@ int			ft_left_x(unsigned long long int nb, t_struct *data, int len)
 	while (data->precision-- - len > 0)
 		a += ft_putchar_fd_return('0', 1);
 	if (data->type == 'x')
-		str = ft_strdup(ft_itoa_base(nb, "0123456789abcdef"));
+		str = ft_itoa_base(nb, "0123456789abcdef");
 	else
-		str = ft_strdup(ft_itoa_base(nb, "0123456789ABCDEF"));
+		str = ft_itoa_base(nb, "0123456789ABCDEF");
 	if (!(p == -1 && nb == 0))
 		while (str[i])
 		{
@@ -87,9 +87,9 @@ int			ft_right_x(unsigned long long int nb, t_struct *data, int l, char c)
 	while (data->precision-- - l > 0)
 		a += ft_putchar_fd_return('0', 1);
 	if (data->type == 'x')
-		str = ft_strdup(ft_itoa_base(nb, "0123456789abcdef"));
+		str = ft_itoa_base(nb, "0123456789abcdef");
 	else
-		str = ft_strdup(ft_itoa_base(nb, "0123456789ABCDEF"));
+		str = ft_itoa_base(nb, "0123456789ABCDEF");
 	if (!(p == -1 && nb == 0))
 		while (str[i])
 			a += ft_putchar_fd_return(str[i++], 1);

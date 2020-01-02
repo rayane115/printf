@@ -6,7 +6,7 @@
 /*   By: rqouchic <rayane.qouchich@gmail.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/11 13:09:21 by rqouchic          #+#    #+#             */
-/*   Updated: 2019/12/30 21:56:01 by rqouchic         ###   ########.fr       */
+/*   Updated: 2020/01/02 17:57:52 by rqouchic         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,9 +15,10 @@
 int					ft_putnbr_unsigned(unsigned int n)
 {
 	long			nb;
-	static int		i;
+	static int		i ;
 
 	i = 0;
+
 	nb = n;
 	if (nb > 9)
 		ft_putnbr_unsigned(nb / 10);

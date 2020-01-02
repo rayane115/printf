@@ -6,7 +6,7 @@
 /*   By: rqouchic <rayane.qouchich@gmail.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/13 13:27:59 by rqouchic          #+#    #+#             */
-/*   Updated: 2020/01/01 19:03:02 by rqouchic         ###   ########.fr       */
+/*   Updated: 2020/01/02 01:00:35 by rqouchic         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,6 +74,16 @@ int			ft_right_u(unsigned int nb, t_struct *data, int len, char c)
 	return (a);
 }
 
+void		ft_raccourci(t_struct *data, int nb, int *len)
+{
+	if (data->prec_s == -1 && nb == 0)
+	{
+		data->precision = 0;
+		data->width--;
+		*len = *len + 1;
+	}
+}
+
 int			ft_print_u(unsigned int nb, t_struct *data)
 {
 	int		len;
@@ -87,6 +97,7 @@ int			ft_print_u(unsigned int nb, t_struct *data)
 		data->width = data->width + 1;
 	if (data->flag == '0' && (data->precision == 0 || data->prec_s <= -1))
 		c = '0';
+	ft_raccourci(data, nb, &len);
 	len = count_len_u(nb);
 	if (nb == 0)
 		len = 1;

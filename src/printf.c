@@ -6,7 +6,7 @@
 /*   By: rqouchic <rayane.qouchich@gmail.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/03 12:57:58 by rqouchic          #+#    #+#             */
-/*   Updated: 2020/01/01 22:16:40 by rqouchic         ###   ########.fr       */
+/*   Updated: 2020/01/02 21:45:32 by rqouchic         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,6 +23,7 @@ int				select_type(t_struct *data, va_list arg)
 	int			i;
 
 	i = 0;
+
 	if (data->type == 'c')
 		i = ft_print_char(va_arg(arg, int), data);
 	else if (data->type == '%')

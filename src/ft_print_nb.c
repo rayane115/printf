@@ -6,7 +6,7 @@
 /*   By: rqouchic <rayane.qouchich@gmail.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/12 21:02:47 by rqouchic          #+#    #+#             */
-/*   Updated: 2020/01/01 19:33:22 by rqouchic         ###   ########.fr       */
+/*   Updated: 2020/01/02 17:27:18 by rqouchic         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,20 +70,25 @@ int			ft_right(int nb, t_struct *data, int len, char c)
 	p = data->precision;
 	w = data->width + len;
 	a = 0;
+	if (data->flag == '0' && data->prec_s < 0 && nb < 0)
+		nb = -nb;
 	if (data->precision >= len && nb < 0)
 		data->width = data->width - 1;
 	while (data->width-- > 0)
 		a += ft_putchar_fd_return(c, 1);
+	if (data->prec_s <= -1 && nb < 0)
+	{
+		ft_putchar_fd('-', 1);
+	}
 	if ((p >= len && nb < 0))
 	{
 		ft_putchar_fd('-', 1);
 		a += ft_putchar_fd_return('0', 1);
 	}
-	//printf("mon precs = %d\n", data->prec_s);
 	while (data->precision-- - len > 0)
 		a += ft_putchar_fd_return('0', 1);
 	if ((p >= len && nb < 0) || (nb < 0 && w > 0
-	&& p == 0 && data->flag == '0' ))
+	&& p == 0 && data->flag == '0' ) || (data->prec_s <= -1 && nb < 0))
 		nb = -nb;
 	if (!(p == -1 && nb == 0))
 		ft_putnbr_fd(nb, 1, 0);
@@ -104,6 +109,11 @@ void		ft_raccou_nb(t_struct *data, int nb, int *len)
 		data->width--;
 		*len = *len + 1;
 	}
+	//if (data->prec_s <= -1 && nb < 0)
+	//{
+	//	ft_putchar_fd('-', 1);
+	//}
+
 }
 
 int			ft_print_nb(int nb, t_struct *data)
@@ -119,7 +129,7 @@ int			ft_print_nb(int nb, t_struct *data)
 		c = '0';
 	len = count_len(nb);
 	len_width = len;
-	if (data->precision == -1 && nb == 0)
+	if ((data->precision == -1 && nb == 0) || (data->prec_s <= -1 && nb < 0))
 		ft_raccou_nb(data, nb, &len);
 	if (nb < 0 && data->flag == '0' && data->width > 0
 	&& data->precision == 0)

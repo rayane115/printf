@@ -6,7 +6,7 @@
 /*   By: rqouchic <rayane.qouchich@gmail.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/13 15:00:59 by rqouchic          #+#    #+#             */
-/*   Updated: 2020/01/01 22:16:30 by rqouchic         ###   ########.fr       */
+/*   Updated: 2020/01/01 23:19:49 by rqouchic         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,7 +67,7 @@ char		*ft_str_raccou_add(long long int nb)
 	char	*str;
 
 	if (nb != 0)
-		str = ft_strdup(ft_itoa_base_add(nb, "0123456789abcdef"));
+		str = ft_itoa_base_add(nb, "0123456789abcdef");
 	else
 		str = strdup("0");
 	return (str);

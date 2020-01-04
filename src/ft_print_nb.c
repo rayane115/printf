@@ -6,7 +6,7 @@
 /*   By: rqouchic <rayane.qouchich@gmail.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/12 21:02:47 by rqouchic          #+#    #+#             */
-/*   Updated: 2020/01/02 17:27:18 by rqouchic         ###   ########.fr       */
+/*   Updated: 2020/01/04 17:06:56 by rqouchic         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,8 +70,6 @@ int			ft_right(int nb, t_struct *data, int len, char c)
 	p = data->precision;
 	w = data->width + len;
 	a = 0;
-	if (data->flag == '0' && data->prec_s < 0 && nb < 0)
-		nb = -nb;
 	if (data->precision >= len && nb < 0)
 		data->width = data->width - 1;
 	while (data->width-- > 0)

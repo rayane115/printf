@@ -6,7 +6,7 @@
 /*   By: rqouchic <rayane.qouchich@gmail.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/03 12:45:32 by rqouchic          #+#    #+#             */
-/*   Updated: 2020/01/01 00:48:50 by rqouchic         ###   ########.fr       */
+/*   Updated: 2020/01/04 14:55:32 by rqouchic         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,7 +63,7 @@ int				ft_right_char(char a, t_struct *data, int len, char c);
 int				ft_left_char(char a, t_struct *data, int len);
 void			ft_width_precision_arg(int nextarg, t_struct *data);
 void			ft_initial_data(t_struct *data);
-void			ft_error_type(void);
+int			ft_error_type(void);
 char			*ft_str_raccou_add(long long int nb);
 char			ft_raccou_string(char *str, t_struct *data);
 void			ft_raccou_nb(t_struct *data, int nb, int *len);

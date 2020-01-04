@@ -6,24 +6,18 @@
 /*   By: rqouchic <rayane.qouchich@gmail.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/03 12:57:58 by rqouchic          #+#    #+#             */
-/*   Updated: 2020/01/02 21:45:32 by rqouchic         ###   ########.fr       */
+/*   Updated: 2020/01/04 17:04:15 by rqouchic         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/ft_printf.h"
 #include "../libft/libft.h"
 
-void			ft_error_type(void)
-{
-	write(1, "je ne fais pas les bonus, ou bien comportement chelou", 53);
-}
-
 int				select_type(t_struct *data, va_list arg)
 {
 	int			i;
 
 	i = 0;
-
 	if (data->type == 'c')
 		i = ft_print_char(va_arg(arg, int), data);
 	else if (data->type == '%')
@@ -39,10 +33,8 @@ int				select_type(t_struct *data, va_list arg)
 	else if (data->type == 'x' || data->type == 'X')
 		i = ft_print_x(va_arg(arg, unsigned long long int), data);
 	else
-	{
-		ft_error_type();
 		return (0);
-	}
+
 	return (i);
 }
 
@@ -74,12 +66,14 @@ int				ft_printf(const char *str, ...)
 			ft_struct(str, arg, &i, data);
 		//	printf("%d = ma precisionbis\n",data->prec_s);
 			a += select_type(data, arg);
+			if (data->type == 'z')
+				break;
 		}
 		else
 			a += ft_putchar_fd_return(str[i], 1);
 		i++;
 	}
-	//printf("ret = %d\n",a);
+	printf("ret = %d\n",a);
 	free (data);
 	va_end(arg);
 	return (a);

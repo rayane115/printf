@@ -6,7 +6,7 @@
 /*   By: rqouchic <rayane.qouchich@gmail.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/30 21:24:15 by rqouchic          #+#    #+#             */
-/*   Updated: 2020/01/01 00:39:56 by rqouchic         ###   ########.fr       */
+/*   Updated: 2020/01/04 16:38:22 by rqouchic         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,8 +15,6 @@
 
 void	ft_verif_type(const char *str, t_struct *data, int **i)
 {
-	while (str[**i])
-	{
 		if (str[**i] == 'c' || str[**i] == 's' || str[**i] == 'p' ||
 		str[**i] == 'd' || str[**i] == 'i' ||
 		str[**i] == 'u' || str[**i] == 'x' || str[**i] == 'X' ||
@@ -25,8 +23,11 @@ void	ft_verif_type(const char *str, t_struct *data, int **i)
 			data->type = str[**i];
 			return ;
 		}
-		**i = **i + 1;
-	}
+		else
+		{
+			data->type = 'z';
+			return;
+		}
 }
 
 void	ft_verif_precision(const char *str, t_struct *data, int **i,

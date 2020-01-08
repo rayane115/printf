@@ -6,7 +6,7 @@
 /*   By: rqouchic <rayane.qouchich@gmail.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/13 14:56:44 by rqouchic          #+#    #+#             */
-/*   Updated: 2020/01/01 22:14:26 by rqouchic         ###   ########.fr       */
+/*   Updated: 2020/01/07 16:08:38 by rqouchic         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,7 +64,7 @@ int			ft_right_string(char *str, t_struct *data, int len, char c)
 	return (a);
 }
 
-char		ft_raccou_string(char *str,t_struct *data)
+char		ft_raccou_string(char *str, t_struct *data)
 {
 	char	a;
 	char	b;
@@ -78,6 +78,18 @@ char		ft_raccou_string(char *str,t_struct *data)
 	return (b);
 }
 
+int			ft_printbis_string(char *str, t_struct *data, int *len, char *c)
+{
+	int		a;
+
+	a = 0;
+	if (data->flag == '-')
+		a = ft_left_string(str, data, *len);
+	else
+		a = ft_right_string(str, data, *len, *c);
+	return (a);
+}
+
 int			ft_print_string(char *str, t_struct *data)
 {
 	int		len;
@@ -86,27 +98,23 @@ int			ft_print_string(char *str, t_struct *data)
 	int		a;
 
 	a = 0;
-	c = ' ';
 	if (data->precision == -1 && data->prec_s == 0)
 	{
 		data->precision = 0;
-		str = strdup("");
+		str = ft_strdup("");
+		data->x = 1;
 	}
 	if (!str)
 		str = ft_strdup("(null)");
-	c = ft_raccou_string(str,data);
+	c = ft_raccou_string(str, data);
 	len = ft_strlen(str);
 	len_width = len;
 	if (data->precision > len)
 		len_width = data->precision;
 	data->width = data->width - len_width;
-	if (data->flag == '-')
-		a = ft_left_string(str, data, len);
-	else
-		a = ft_right_string(str, data, len, c);
-	if ((data->precision == -1 && data->prec_s == 0) || !str)
+	a = ft_printbis_string(str, data, &len, &c);
+	if ((data->precision == -1 && data->prec_s == 0) || !str ||
+	(str[0] == '(' && str[1] == 'n') || data->x == 1)
 		free(str);
 	return (a);
 }
-
-//(data->precision == -1 && data->prec_s == 0 ) || data->prec_s

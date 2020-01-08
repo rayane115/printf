@@ -6,7 +6,7 @@
 /*   By: rqouchic <rayane.qouchich@gmail.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/06 16:25:36 by rqouchic          #+#    #+#             */
-/*   Updated: 2020/01/04 14:40:42 by rqouchic         ###   ########.fr       */
+/*   Updated: 2020/01/06 21:05:01 by rqouchic         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,7 +72,8 @@ char				*ft_strncpy(char *dst, const char *src, size_t len);
 void				ft_lstiter(t_list *lst, void (*f)(void *));
 char				*ft_itoa_base(unsigned int n, char *base);
 int					ft_putnbr_unsigned(unsigned int n);
-char				*ft_itoa_base_add(long long int n, char *base);
+char				*ft_itoa_base_add(unsigned long long int n, char *base);
 int					ft_putchar_fd_return(char c, int fd);
+char				*ft_strjoin_f12(char const *s1, char const *s2);
 
 #endif

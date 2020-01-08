@@ -45,7 +45,8 @@ SRCS = ft_atoi.c \
 		ft_lstclear.c\
 		ft_putnbr_unsigned.c\
 		ft_itoa_base_add.c\
-		ft_putchar_fd_return.c
+		ft_putchar_fd_return.c\
+		ft_strjoin_f12.c\
 
 FLAGS = -Wall -Wextra -Werror -g3
 

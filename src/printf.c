@@ -6,7 +6,7 @@
 /*   By: rqouchic <rayane.qouchich@gmail.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/03 12:57:58 by rqouchic          #+#    #+#             */
-/*   Updated: 2020/01/04 17:04:15 by rqouchic         ###   ########.fr       */
+/*   Updated: 2020/01/07 14:15:23 by rqouchic         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,9 @@ int				select_type(t_struct *data, va_list arg)
 	int			i;
 
 	i = 0;
-	if (data->type == 'c')
+	if (data->type == 'z')
+		return (0);
+	else if (data->type == 'c')
 		i = ft_print_char(va_arg(arg, int), data);
 	else if (data->type == '%')
 		i = ft_print_char('%', data);
@@ -31,10 +33,7 @@ int				select_type(t_struct *data, va_list arg)
 	else if (data->type == 'u')
 		i = ft_print_u(va_arg(arg, unsigned int), data);
 	else if (data->type == 'x' || data->type == 'X')
-		i = ft_print_x(va_arg(arg, unsigned long long int), data);
-	else
-		return (0);
-
+		i = ft_print_x((long long)va_arg(arg, unsigned int), data);
 	return (i);
 }
 
@@ -60,21 +59,16 @@ int				ft_printf(const char *str, ...)
 	data = (t_struct *)malloc(sizeof(t_struct));
 	while (str[i])
 	{
-		if (str[i] == '%')
+		if (str[i] && str[i] == '%')
 		{
 			i++;
 			ft_struct(str, arg, &i, data);
-		//	printf("%d = ma precisionbis\n",data->prec_s);
 			a += select_type(data, arg);
-			if (data->type == 'z')
-				break;
 		}
 		else
-			a += ft_putchar_fd_return(str[i], 1);
-		i++;
+			a += ft_putchar_fd_return(str[i++], 1);
 	}
-	printf("ret = %d\n",a);
-	free (data);
+	free(data);
 	va_end(arg);
 	return (a);
 }

@@ -6,7 +6,7 @@
 /*   By: rqouchic <rayane.qouchich@gmail.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/13 13:54:45 by rqouchic          #+#    #+#             */
-/*   Updated: 2020/01/01 23:30:49 by rqouchic         ###   ########.fr       */
+/*   Updated: 2020/01/07 14:41:27 by rqouchic         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,6 @@ int			count_len_x(unsigned long long int nb)
 
 int			ft_left_x(unsigned long long int nb, t_struct *data, int len)
 {
-	char	*str;
 	int		i;
 	int		a;
 	int		p;
@@ -43,30 +42,36 @@ int			ft_left_x(unsigned long long int nb, t_struct *data, int len)
 	a = 0;
 	if (data->prec_s == -1 && nb == 0)
 	{
-		data->precision = 2;
+		a += ft_putchar_fd_return('0', 1);
 		data->width--;
 	}
 	while (data->precision-- - len > 0)
 		a += ft_putchar_fd_return('0', 1);
-	if (data->type == 'x')
-		str = ft_itoa_base(nb, "0123456789abcdef");
-	else
-		str = ft_itoa_base(nb, "0123456789ABCDEF");
-	if (!(p == -1 && nb == 0))
-		while (str[i])
-		{
-			a += ft_putchar_fd_return(str[i], 1);
-			i++;
-		}
+	ft_printbis_x(data, &nb, &p, &a);
 	while (data->width-- > 0)
 		a += ft_putchar_fd_return(' ', 1);
-	free(str);
 	return (a);
+}
+
+void		ft_printbis_x(t_struct *data, unsigned long long int *nb,
+int *p, int *a)
+{
+	int		i;
+	char	*str;
+
+	i = 0;
+	if (data->type == 'x')
+		str = ft_itoa_base(*nb, "0123456789abcdef");
+	else
+		str = ft_itoa_base(*nb, "0123456789ABCDEF");
+	if (!(*p == -1 && *nb == 0))
+		while (str[i])
+			*a += ft_putchar_fd_return(str[i++], 1);
+	free(str);
 }
 
 int			ft_right_x(unsigned long long int nb, t_struct *data, int l, char c)
 {
-	char	*str;
 	int		i;
 	int		a;
 	int		p;
@@ -86,18 +91,11 @@ int			ft_right_x(unsigned long long int nb, t_struct *data, int l, char c)
 		a += ft_putchar_fd_return(c, 1);
 	while (data->precision-- - l > 0)
 		a += ft_putchar_fd_return('0', 1);
-	if (data->type == 'x')
-		str = ft_itoa_base(nb, "0123456789abcdef");
-	else
-		str = ft_itoa_base(nb, "0123456789ABCDEF");
-	if (!(p == -1 && nb == 0))
-		while (str[i])
-			a += ft_putchar_fd_return(str[i++], 1);
-	free(str);
+	ft_printbis_x(data, &nb, &p, &a);
 	return (a);
 }
 
-int			ft_print_x(unsigned long long int nb, t_struct *data)
+int			ft_print_x(long long int nb, t_struct *data)
 {
 	int		len;
 	int		len_width;

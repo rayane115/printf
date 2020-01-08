@@ -6,7 +6,7 @@
 /*   By: rqouchic <rayane.qouchich@gmail.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/13 15:00:59 by rqouchic          #+#    #+#             */
-/*   Updated: 2020/01/01 23:19:49 by rqouchic         ###   ########.fr       */
+/*   Updated: 2020/01/07 17:26:01 by rqouchic         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,8 +69,19 @@ char		*ft_str_raccou_add(long long int nb)
 	if (nb != 0)
 		str = ft_itoa_base_add(nb, "0123456789abcdef");
 	else
-		str = strdup("0");
+		str = ft_strdup("0");
 	return (str);
+}
+
+void		ft_raccou_add_2(t_struct *data, int *len, int nb, char *str)
+{
+	if (data->precision == -1 && nb == 0)
+	{
+		free(str);
+		str = ft_strdup("");
+	}
+	if (data->precision == -1 && nb == 0)
+		*len = *len - 1;
 }
 
 int			ft_print_add(long long int nb, t_struct *data)
@@ -87,13 +98,7 @@ int			ft_print_add(long long int nb, t_struct *data)
 		c = '0';
 	str = ft_str_raccou_add(nb);
 	len = ft_strlen(str) + 2;
-	if (data->precision == -1 && nb == 0)
-	{
-		free(str);
-		str = strdup("");
-	}
-	if (data->precision == -1 && nb == 0)
-		len = len - 1;
+	ft_raccou_add_2(data, &len, nb, str);
 	len_width = len;
 	if (data->precision > len)
 		len_width = data->precision;

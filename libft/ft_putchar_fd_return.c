@@ -6,7 +6,7 @@
 /*   By: rqouchic <rayane.qouchich@gmail.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/24 19:12:32 by rqouchic          #+#    #+#             */
-/*   Updated: 2020/01/04 14:22:10 by rqouchic         ###   ########.fr       */
+/*   Updated: 2020/01/07 00:35:02 by rqouchic         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 int				ft_putchar_fd_return(char c, int fd)
 {
-	int i ;
+	int i;
 
 	i = 0;
 	write(fd, &c, 1);
